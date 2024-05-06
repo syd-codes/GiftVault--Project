@@ -1,0 +1,58 @@
+{
+    // Specifies the version of the tasks configuration. This is used by VS Code to understand how to parse the file.
+    "version": "2.0.0",
+    // An array of tasks that can be executed within VS Code. Each task represents a command that can be run.
+    "tasks": [
+        {
+            // A user-friendly name for the task. This name is used to identify the task in the Command Palette.
+            "label": "build",
+            // The command to run. For .NET projects, this is typically 'dotnet' to invoke the .NET CLI.
+            "command": "dotnet",
+            // Specifies that the command should be run in a shell like Command Prompt, PowerShell, or bash.
+            "type": "shell",
+            // Arguments passed to the command. Here it instructs the .NET CLI to build a specific project.
+            "args": [
+                "build", // Tells the .NET CLI to compile the project.
+                "${workspaceFolder}/Client/Client.csproj" // The path to the project file to build.
+                // Example variation: "${workspaceFolder}/AnotherProject/AnotherProject.csproj" to build a different project.
+            ],
+            // Defines this task as a build task within VS Code. It can be triggered by the Build command (e.g., Ctrl+Shift+B).
+            "group": {
+                "kind": "build",
+                "isDefault": true // Makes this the default build task.
+            },
+            // Associates problem matchers with the task. This helps VS Code identify errors and warnings in the output.
+            "problemMatcher": "$msCompile",
+            // Controls how the terminal for the task is displayed in VS Code.
+            "presentation": {
+                "reveal": "silent" // The terminal won't automatically pop up when the task is run.
+                // Other options include "always" to always show the terminal, or "never" which hides the output.
+            }
+        }
+    ]
+}
+/*
+
+Purpose of tasks.json: This file lets you configure commands (tasks) that VS Code can run for you, such as building your project. It's a way to automate repetitive commands you might run in the terminal.
+
+Why the Build Task Matters: Before debugging or running your .NET Core application, you need to compile it into an executable. This build task does exactly that by invoking the dotnet build command, ensuring your latest code changes are included.
+
+"label": Think of this as the name you give your task. It's how you'll refer to it in VS Code, for example, when setting a preLaunchTask in launch.json.
+
+"command" and "args": Together, these specify what command to run and what arguments to pass it. Mistakes here can lead to your project not building correctly, or at all.
+
+"group": By marking this task as a build task and making it the default, you can quickly build your project using a simple keyboard shortcut, streamlining your workflow.
+
+"problemMatcher": This helps VS Code understand and highlight compile errors or warnings directly in your editor, making it easier to find and fix issues.
+
+"presentation": Controls when the terminal used by this task shows up. It's set to silent to keep your workspace less cluttered, but you can change it to always if you prefer to see the output every time.
+
+Common Pitfalls:
+
+Wrong Project Path: Make sure the path in "args" correctly points to your .csproj file. If the path is wrong, the build will fail because dotnet can't find the project to compile.
+
+Forgetting to Save tasks.json: Changes won't take effect until you save this file. It's a common mistake to make changes and forget to save them.
+
+Misunderstanding "presentation": If you set "reveal": "never", you might miss important messages from the build process. Ensure you understand these options to choose the best one for your needs.
+
+*/

@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csdevkit",
+        "github.copilot"
+    ],
+    "unwantedRecommendations": [
+        "streetsidesoftware.code-spell-checker",
+        "ms-dotnettools.vscodeintellicode-csharp",
+        "ms-dotnettools.dotnet-interactive-vscode",
+        "ms-vscode-remote.remote-containers",
+        "editorconfig.editorconfig",
+        "ms-vsliveshare.vsliveshare"
+    ]
+}

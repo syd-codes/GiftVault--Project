@@ -1,0 +1,91 @@
+{
+    // Specifies the version of the configuration file format. This is required by VS Code to understand how to read the file.
+    "version": "0.2.0",
+    // The list of configurations that VS Code can use for debugging. Each configuration is a different way to run your program.
+    "configurations": [
+        {
+            // A human-readable name for this configuration. This name appears in the VS Code UI.
+            "name": "CIS-230-SP24 Client",
+            // The type of debugger to use. For .NET Core applications, this is typically 'coreclr'.
+            "type": "coreclr",
+            // The request type. 'launch' means VS Code will start and debug your app. 'attach' would connect to an already running app.
+            "request": "launch",
+            // Specifies a task to run before debugging starts. 'build' is a common task to compile your code.
+            "preLaunchTask": "build",
+            // The path to the main DLL of your application. VS Code uses this to start your app.
+            // Example: If your output is in a different folder, change the path accordingly.
+            "program": "${workspaceFolder}/Client/bin/Debug/net8.0/Client.dll",
+            // An array of arguments to pass to your application when it starts. For example, ["arg1", "arg2"].
+            "args": [],
+            // The directory that your program is assumed to start in. Here, it's the root folder of your project.
+            "cwd": "${workspaceFolder}",
+            // Determines where the application's output is shown. 'internalConsole' means inside VS Code.
+            "console": "externalTerminal",
+            // If true, the debugger stops at the first line of code. False means it runs until a breakpoint is hit.
+            "stopAtEntry": false,
+            // Controls when the internal console is shown. 'openOnSessionStart' opens it automatically when debugging starts.
+            "internalConsoleOptions": "openOnSessionStart",
+            // If true, the debugger will only stop at breakpoints in your code. False means it stops in all code.
+            "justMyCode": true
+        },
+        {
+            // A configuration to attach the debugger to a running .NET Core application.
+            "name": ".NET Core Attach",
+            // The type of debugger to use. For .NET Core applications, this is typically 'coreclr'.
+            "type": "coreclr",
+            // The request type. 'launch' means VS Code will start and debug your app. 'attach' would connect to an already running app.
+            "request": "attach",
+            // A special command that lets you pick a running process to attach the debugger to.
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
+/*
+
+Key Points:
+---
+
+Why Debug Configurations?: Debug configurations allow you to control how your application runs and debugs in Visual Studio Code. It's crucial for ensuring your application starts correctly and can be debugged as expected.
+
+"version": This must match the format expected by VS Code. Always use the version provided by VS Code when you create a new launch.json.
+
+"configurations": Think of these as different scenarios for running your app. You might have one for debugging locally, another for attaching to a running service, etc.
+
+"preLaunchTask": This is where you can automate necessary steps before debugging, like building your application. It refers to tasks defined in tasks.json. If you don't compile your code before running, you might be debugging an outdated version of your app, leading to confusion.
+
+"program" and "args": These specify what to run and with what parameters. Incorrect paths or arguments can lead to your application not starting correctly.
+
+"cwd": Ensures your application starts in the right directory. This can affect how your application finds files or behaves at startup.
+
+"console" and "internalConsoleOptions": Controls where you see your application's output and when the console appears. It's a matter of preference but can affect how you view logs or output.
+
+Common Pitfalls:
+---
+
+Incorrect Paths: Ensure the "program" path correctly points to your build output. A common mistake is having the wrong path or filename, which prevents the debugger from starting your application.
+
+Forgetting "preLaunchTask": If you skip this, you might run your application without compiling recent changes. Always build before debugging to ensure you're testing the latest version.
+
+Not Specifying "cwd" Correctly: This can lead to your application not finding configuration files or other resources if it expects to start in a specific directory.
+
+Variables:
+---
+
+${workspaceFolder}: The path of the folder opened in VS Code. If no folder is open, it will not be replaced.
+${workspaceFolderBasename}: The name of the folder opened in VS Code without any slashes (/), backslashes (\), or full path.
+${file}: The current opened file.
+${fileWorkspaceFolder}: The current opened file's workspace folder.
+${relativeFile}: The current opened file relative to workspaceFolder.
+${fileBasename}: The current opened file's basename.
+${fileBasenameNoExtension}: The current opened file's basename with no file extension.
+${fileDirname}: The current opened file's dirname.
+${fileExtname}: The current opened file's extension.
+${cwd}: The task runner's current working directory on startup.
+${lineNumber}: The current selected line number in the active file.
+${selectedText}: The current selected text in the active file.
+${execPath}: The path to the running VS Code executable.
+${defaultBuildTask}: The name of the default build task.
+
+Additionally, you can define your own variables in tasks.json and launch.json using the "env" field to create environment variables, which can then be referenced using the syntax ${env:MY_VARIABLE}.
+
+*/

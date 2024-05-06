@@ -1,0 +1,30 @@
+{
+    "csharp.debug.logging.moduleLoad": false,
+    "csharp.debug.logging.processExit": false,
+    "csharp.debug.logging.threadExit": false,
+    "csharp.debug.justMyCode": true,
+    "csharp.suppressDotnetRestoreNotification": true,
+    "csharp.suppressDotnetInstallWarning": true,
+    "csharp.format.enable": true,
+    "debug.disassemblyView.showSourceCode": true,
+    "debug.terminal.clearBeforeReusing": true,
+    "editor.wordWrap": "on",
+    "editor.minimap.enabled": false,
+    "editor.tabCompletion": "on",
+    "editor.suggest.showMethods": true,
+    "editor.hover.enabled": true,
+    "editor.codeLens": true,
+    "editor.formatOnSave": true,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.showFoldingControls": "never",
+    "workbench.colorTheme": "Visual Studio 2019 Light",
+    "explorer.compactFolders": false,
+    "files.autoSave": "afterDelay",
+    "breadcrumbs.enabled": true,
+    "workbench.startupEditor": "readme",
+    "workbench.editorAssociations": {
+        "*.md": "vscode.markdown.preview.editor"
+    },
+    "github.copilot.chat.welcomeMessage": "never"
+}
