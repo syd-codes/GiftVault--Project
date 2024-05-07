@@ -28,10 +28,40 @@ while (true)
     PresentFamily(family);
 }
 
+  
 static void AssignSecretSanta()
 {
-    // TODO: Implement this method
-    AnsiConsole.MarkupLine("[yellow]This feature is not implemented yet.[/]");
+    var families = Database
+    .ListExistingFamilies()
+    .Select(x => new Database(x.Name));
+
+    foreach (var family in families)
+    {
+        foreach (var member in family.Family!.Members)
+        {
+            if (TryFetchRandomMember(member.GetUniqueName(family.Family.Name), families, out var assignee))
+            {
+                member.GiveToName = assignee!.Value.Name;
+                member.GiveToGiftIdea = assignee!.Value.GiftIdea;
+                family.Save();
+
+                Console.WriteLine($"{family.Family.Name}/{member.Name} is assigned to {member.GiveToName}.");
+            }
+        }
+    }
+    bool TryFetchRandomMember(string uniqueName, IEnumerable<Database> families, out (string Name, string GiftIdea)? assignee)
+    {
+        assignee = families
+            .SelectMany(x => x.Family!.Members.Select(y=> new { UniqueName = y.GetUniqueName(x.Family.Name), Member = y }))
+            .Where(x => x.UniqueName != uniqueName)
+            .Where(x => string.IsNullOrEmpty(x.Member.GiveToName)||x.Member.GiveToName != "-")
+            .Where(x => !x.Member.AvoidMembers.Contains(uniqueName))
+            .OrderBy(x => Guid.NewGuid())
+            .Select(x => (x.Member.Name, x.Member.GiftIdea))
+            .FirstOrDefault();
+
+        return assignee is not null;
+    }
 }
 
 static void ShowAllFamilyReport()
@@ -43,6 +73,24 @@ static void ShowAllFamilyReport()
         return;
     }
 
+  //Create the tree
+    var root = new Tree("[yellow]Families[/]");
+    
+
+// Add some nodes
+    var foo = root.AddNode("[yellow]Members[/]");
+    var table = foo.AddNode(new Table()
+        .RoundedBorder()
+        .AddColumn("")
+        .AddColumn("")
+        .AddRow()
+        .AddRow()
+        .AddRow());
+
+    table.AddNode("[blue][/]");
+    foo.AddNode("");
+
+    AnsiConsole.Write(root);
     /*
      In a tree format, show EVERY family and EVERY member.
      You get to decide how it looks. Just make it nice. 
@@ -50,17 +98,13 @@ static void ShowAllFamilyReport()
     */
 
     AnsiConsole.MarkupLine("[yellow]Your report goes here.[/]");
-
-    Console.WriteLine("\r\nPress any key to continue...");
+    //Console.WriteLine("\r\nPress any key to continue...");
     Console.Read();
 }
 
 static void InsertSampleFamilies(bool clearFirst = false)
 {
-    /*
-     This method is used to insert sample families into the database.
-     Ensure there are least three families, and at least 5 members in each.
-    */
+    
 
     if (clearFirst)
     {

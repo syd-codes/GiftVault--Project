@@ -191,4 +191,9 @@ static class FamilyUI
     {
         return Database.ListExistingFamilies().Any(x => x.Name == family.Name);
     }
+
+    internal static void Show((string Name, string FileName) family)
+    {
+        throw new NotImplementedException();
+    }
 }
